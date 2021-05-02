@@ -19,10 +19,19 @@
           <td><%= @book.body %></td>
           <% if @book.user == current_user %>
           <td><%= render 'books/favorite', book: @book%></td>
-          <td><%= link_to 'Destroy', book_path, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger destroy_book_#{@book.id}"%></td>
+          <td>コメント数：<%= @book.book_comments.count%></td>
           <% end %>
         </tr>
       </table>
+      <%= render 'books/comment', book: @book%>
+        <div class="f">
+        <%= form_with(model:[@book, @book_comment], local: true) do |f| %>
+        <div class="form-group">
+          <%= f.text_area :comment, rows:'5',placeholder: "コメントをここに",class:"form-control" %>
+        </div>
+          <%= f.submit "送信する" %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
